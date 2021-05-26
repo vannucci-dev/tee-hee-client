@@ -1,0 +1,18 @@
+.product-hero {
+  margin: 2rem auto 3rem auto;
+  height: 20rem;
+  width: 150%;
+  background-image: url("https://images.unsplash.com/photo-1523199455310-87b16c0eed11?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position-x: center;
+  background-position-y: center;
+  text-align: center;
+  color: white;
+}
+
+.product-hero h2 {
+  margin-top: 10%;
+  text-transform: uppercase;
+  font-size: 3rem;
+}

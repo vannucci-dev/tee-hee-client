@@ -3,7 +3,8 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
-import Featured from "../featured/Featured";
+import Featured from "../../Components/Featured/Featured";
+
 import "./home.css";
 
 export default function Home() {
