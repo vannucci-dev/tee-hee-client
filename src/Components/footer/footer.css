@@ -1,0 +1,11 @@
+.footer {
+  padding: 4rem 5rem;
+  background-color: #e4efe7;
+  margin-top: 3rem;
+  max-width: 100%;
+  min-width: 100%;
+}
+
+.footer-categories {
+  text-align: center;
+}

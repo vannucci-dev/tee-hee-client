@@ -1,0 +1,35 @@
+.hero {
+  margin-top: 2rem;
+  height: 20rem;
+  width: 150%;
+  background-image: url("./hero.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position-x: center;
+  background-position-y: center;
+}
+.category-container {
+  width: 10rem;
+  text-align: center;
+  background-color: red;
+}
+.category-shirt {
+  background-image: url("./tshirts.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.category-posters {
+  background-image: url("./posters.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.category-mugs {
+  background-image: url("./mugs.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.button {
+  margin: 15rem auto 2rem;
+  width: 100%;
+}

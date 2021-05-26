@@ -8,16 +8,15 @@ import Button from "react-bootstrap/Button";
 
 export const NavBar = () => {
   return (
-    <Navbar bg="light" expand="lg">
-      <Navbar.Brand href="#home">
-        <img
-          src="./default-monochrome-black.svg"
-          width="60"
-          height="50"
-          className="d-inline-block align-top"
-          alt="React Bootstrap logo"
-        />
-      </Navbar.Brand>
+    <Navbar expand="lg" style={{ backgroundColor: "#faf1e6" }}>
+      <img
+        style={{ margin: "auto 2rem" }}
+        src="./default-monochrome-black.svg"
+        width="100"
+        height="60"
+        className="d-inline-block align-top"
+        alt="React Bootstrap logo"
+      />
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="mr-auto">
@@ -37,23 +36,12 @@ export const NavBar = () => {
 
           <Form inline>
             <FormControl type="text" placeholder="Search" className="mr-sm-2" />
-            <Button variant="outline-success">Search</Button>
           </Form>
           <Nav.Link href="#link" md={{ span: 4, offset: 4 }}>
             Cart
           </Nav.Link>
           <Nav.Link href="#link">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="15"
-              height="15"
-              viewBox="0 0 8 8"
-            >
-              <path
-                d="M.34 0a.5.5 0 0 0 .16 1h1.5l.09.25.41 1.25.41 1.25c.04.13.21.25.34.25h3.5c.14 0 .3-.12.34-.25l.81-2.5c.04-.13-.02-.25-.16-.25h-4.44l-.38-.72a.5.5 0 0 0-.44-.28h-2a.5.5 0 0 0-.09 0 .5.5 0 0 0-.06 0zm3.16 5c-.28 0-.5.22-.5.5s.22.5.5.5.5-.22.5-.5-.22-.5-.5-.5zm3 0c-.28 0-.5.22-.5.5s.22.5.5.5.5-.22.5-.5-.22-.5-.5-.5z"
-                transform="translate(0 1)"
-              />
-            </svg>
+            <i class="fas fa-shopping-cart"></i>
           </Nav.Link>
         </Nav>
       </Navbar.Collapse>
