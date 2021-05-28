@@ -1,0 +1,54 @@
+#flyoutMenu {
+  width: 50vw;
+  height: 100vh;
+  background-color: #e4efe7;
+  position: fixed;
+  top: 0;
+  left: 0;
+  transition: all 1s;
+  overflow: scroll;
+  z-index: 1000;
+}
+
+#flyoutMenu.hide {
+  transform: translateX(300vh);
+  opacity: 0;
+}
+
+#flyoutMenu.show {
+  transform: translateX(0vh);
+  opacity: 1;
+  overflow: hidden;
+}
+
+#flyoutMenu h3 {
+  color: #064420;
+  margin-left: 3rem;
+}
+
+#flyoutMenu h2 a:hover {
+  text-decoration: underline;
+}
+
+.container {
+  margin-top: 2rem;
+}
+
+.cart-items {
+  display: flex;
+}
+.cart-item {
+  margin-left: 2rem;
+}
+
+.cart-item img {
+  height: 10rem;
+  width: 10rem;
+  margin-right: 1rem;
+}
+
+.checkout,
+.total {
+  color: #064420;
+  margin-left: 2rem;
+}

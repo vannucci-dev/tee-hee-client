@@ -1,5 +1,5 @@
 import { NavBar } from "./Components/NavBar/Navbar";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { HashRouter as Router, Switch, Route } from "react-router-dom";
 import Home from "./Views/Home/Home";
 import AlertDismissibleExample from "./Components/Alert/Alert";
 import Footer from "./Components/Footer/Footer";
@@ -7,8 +7,20 @@ import Product from "./Views/Product/Product";
 import Login from "./Views/Login/Login";
 import Signup from "./Views/Signup/Signup";
 import User from "./Views/User/User";
+import CartCanvas from "./Views/Cart/Cart";
+import Cart from "./Views/Cart/Cart";
+import { useState } from "react";
 
 export default function App() {
+  const [visible, setVisible] = useState();
+
+  const toggleMenu = () => {
+    setVisible(!visible);
+  };
+  const handleMouseDown = (e) => {
+    toggleMenu();
+    e.stopPropagation();
+  };
   return (
     <Router>
       <div>
@@ -17,10 +29,14 @@ export default function App() {
             <AlertDismissibleExample />
           </Route>
         </Switch>
-        <NavBar />
+        <NavBar handleMouseDown={handleMouseDown} />
+        <Cart handleMouseDown={handleMouseDown} menuVisibility={visible} />
         <Switch>
           <Route path="/login">
             <Login />
+          </Route>
+          <Route path="/cart">
+            <CartCanvas />
           </Route>
           <Route path="/signup">
             <Signup />
