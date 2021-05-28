@@ -41,8 +41,11 @@ export default function App() {
           <Route path="/signup">
             <Signup />
           </Route>
-          <Route path="/shirts">
-            <Product />
+          <Route path="/posters">
+            <Product
+              title="poster"
+              src="https://images.unsplash.com/photo-1491252645376-253f0f174d78?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1372&q=80"
+            />
           </Route>
           <Route path="/user">
             <User />

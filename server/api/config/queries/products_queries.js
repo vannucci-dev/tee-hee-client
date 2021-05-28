@@ -10,11 +10,29 @@ const getAllProducts = (req, res) => {
   });
 };
 // GET api/products/:id
-const getProductById = (req, res) => {
+const getProductById = (req, res, next) => {
   const id = parseInt(req.params.id);
+  if (Number.isNaN(id)) {
+    next();
+  } else {
+    pool.query(
+      "SELECT * FROM products WHERE product_id = $1",
+      [id],
+      (err, results) => {
+        if (err) {
+          throw err;
+        }
+        res.status(200).json(results.rows);
+      }
+    );
+  }
+};
+// GET api/products/:category
+const getProductsByCategory = (req, res) => {
+  const category = req.params.category;
   pool.query(
-    "SELECT * FROM products WHERE product_id = $1",
-    [id],
+    "SELECT * FROM products WHERE category = $1",
+    [category],
     (err, results) => {
       if (err) {
         throw err;
@@ -73,4 +91,5 @@ module.exports = {
   addNewProduct,
   updateProduct,
   deleteProduct,
+  getProductsByCategory,
 };

@@ -5,6 +5,7 @@ const products = express.Router();
 
 products.get("/", db.getAllProducts);
 products.get("/:id", db.getProductById);
+products.get("/:category", db.getProductsByCategory);
 products.post("/", db.addNewProduct);
 products.put("/:id", db.updateProduct);
 products.delete("/:id", db.deleteProduct);
