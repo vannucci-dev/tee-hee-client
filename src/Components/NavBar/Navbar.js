@@ -40,9 +40,7 @@ export const NavBar = ({ handleMouseDown }) => {
             Cart
           </Nav.Link>
           <button onMouseDown={handleMouseDown}>
-            <a href="/#/cart">
-              <i class="fas fa-shopping-cart"></i>
-            </a>
+            <i class="fas fa-shopping-cart"></i>
           </button>
         </Nav>
       </Navbar.Collapse>

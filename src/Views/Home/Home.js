@@ -20,19 +20,25 @@ export default function Home() {
           }}
         >
           <Col md={4} sm={12} className="category-container category-shirt">
-            <Button className="button" variant="light">
-              Shop Shirts
-            </Button>
+            <a href="/#/shirts" className="a-button">
+              <Button className="button" variant="light">
+                Shop Shirts
+              </Button>
+            </a>
           </Col>
           <Col md={4} sm={12} className="category-container category-posters">
-            <Button className="button" variant="light">
-              Shop Posters
-            </Button>
+            <a href="/#/posters" className="a-button">
+              <Button className="button" variant="light">
+                Shop Posters
+              </Button>
+            </a>
           </Col>
           <Col md={4} sm={12} className="category-container category-mugs">
-            <Button className="button" variant="light">
-              Shop Mugs
-            </Button>
+            <a href="/#/mugs" className="a-button">
+              <Button className="button" variant="light">
+                Shop Mugs
+              </Button>
+            </a>
           </Col>
         </Row>
       </Container>

@@ -1,15 +1,25 @@
 import Carousel from "react-bootstrap/Carousel";
 import ProductCard from "../ProductCard/Card";
 import Container from "react-bootstrap/Container";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 
 export default function ProductCarousel(props) {
   const [productsState, setProductsState] = useState([]);
-  axios.get(`/api/products/${props.category}`).then((res) => {
-    const products = res.data;
-    setProductsState(products);
-  });
+
+  useEffect(() => {
+    const productsRequest = async () => {
+      try {
+        const res = await axios.get(`/api/products/${props.category}`);
+        const { data } = res;
+        setProductsState(data);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+    productsRequest();
+  }, [props.category]);
+
   return (
     <Carousel controls={false} interval={4000}>
       <Carousel.Item>

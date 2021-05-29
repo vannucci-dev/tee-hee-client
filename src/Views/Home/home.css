@@ -11,7 +11,6 @@
 .category-container {
   width: 10rem;
   text-align: center;
-  background-color: red;
 }
 .category-shirt {
   background-image: url("./tshirts.jpg");
@@ -32,4 +31,8 @@
 .button {
   margin: 15rem auto 2rem;
   width: 100%;
+}
+
+.a-button {
+  margin: 0 auto !important;
 }
