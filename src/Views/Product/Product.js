@@ -5,6 +5,7 @@ import Col from "react-bootstrap/Col";
 import ProductCarousel from "../../Components/Carousel/Carousel";
 import "./product.css";
 import Hero from "../../Components/Hero/Hero";
+import AllProducts from "../../Components/AllProducts/AllProducts";
 
 export default function Product(props) {
   return (
@@ -31,16 +32,20 @@ export default function Product(props) {
         </Row>
       </Container>
 
-      <Container style={{ marginTop: "3rem" }}>
+      <Container
+        style={{
+          marginTop: "3rem",
+          marginLeft: "50%",
+          transform: "translateX(-50%)",
+        }}
+      >
         <Row>
           <Col>
-            <h4>Browse by name:</h4>
+            <h4>All {props.title}s:</h4>
           </Col>
         </Row>
         <Row>
-          <Col>
-            <ProductCarousel />
-          </Col>
+          <AllProducts category={props.title} />
         </Row>
       </Container>
     </div>

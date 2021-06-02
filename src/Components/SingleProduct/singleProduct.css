@@ -1,0 +1,13 @@
+.category-tag {
+  opacity: 0.7;
+  font-size: 0.8rem;
+}
+
+.img-col {
+  max-width: 60rem;
+  object-fit: cover;
+}
+
+.single-img {
+  width: 100%;
+}

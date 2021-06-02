@@ -10,6 +10,7 @@ import User from "./Views/User/User";
 import CartCanvas from "./Views/Cart/Cart";
 import Cart from "./Views/Cart/Cart";
 import { useState } from "react";
+import SingleProduct from "./Components/SingleProduct/SingleProduct";
 
 export default function App() {
   const [visible, setVisible] = useState();
@@ -59,6 +60,7 @@ export default function App() {
               src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
             />
           </Route>
+          <Route path="/products/:id" children={<SingleProduct />} />
           <Route path="/user">
             <User />
           </Route>
