@@ -6,6 +6,7 @@ import Button from "react-bootstrap/Button";
 import Featured from "../../Components/Featured/Featured";
 
 import "./home.css";
+import { Link } from "react-router-dom";
 
 export default function Home() {
   return (
@@ -20,25 +21,25 @@ export default function Home() {
           }}
         >
           <Col md={4} sm={12} className="category-container category-shirt">
-            <a href="/#/shirts" className="a-button">
+            <Link to="/shirts">
               <Button className="button" variant="light">
                 Shop Shirts
               </Button>
-            </a>
+            </Link>
           </Col>
           <Col md={4} sm={12} className="category-container category-posters">
-            <a href="/#/posters" className="a-button">
+            <Link to="/posters">
               <Button className="button" variant="light">
                 Shop Posters
               </Button>
-            </a>
+            </Link>
           </Col>
           <Col md={4} sm={12} className="category-container category-mugs">
-            <a href="/#/mugs" className="a-button">
+            <Link to="/mugs">
               <Button className="button" variant="light">
                 Shop Mugs
               </Button>
-            </a>
+            </Link>
           </Col>
         </Row>
       </Container>

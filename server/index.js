@@ -13,8 +13,6 @@ app.get("/", (req, res) => {
 });
 app.use("/api", api);
 
-app.set("view engine", "ejs");
-
 app.listen(port, () => {
   console.log("Server started on port " + port);
 });

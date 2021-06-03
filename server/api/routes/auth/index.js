@@ -13,7 +13,6 @@ const initializePassport = require("../../config/passportConfig");
 
 initializePassport(passport);
 
-auth.use(express.urlencoded({ extended: false }));
 auth.use(
   session({
     secret: process.env.SESSION_SECRET,
@@ -28,7 +27,7 @@ auth.use(flash());
 
 const checkAuthenticated = (req, res, next) => {
   if (req.isAuthenticated()) {
-    return res.redirect("/api/auth/dashboard");
+    res.send({ isAuthenticated: true });
   } else {
     next();
   }
@@ -38,21 +37,21 @@ const checkNotAuthenticated = (req, res, next) => {
   if (req.isAuthenticated()) {
     next();
   } else {
-    res.redirect("/api/auth/login");
+    res.send({ isAuthenticated: false });
   }
 };
 
 auth.get("/", (req, res) => {
-  res.redirect("/api/auth/login");
+  res.redirect("/#/login");
 });
 auth.get("/login", checkAuthenticated, (req, res) => {
-  res.render("login");
+  res.redirect("/#/login");
 });
 auth.get("/signup", checkAuthenticated, (req, res) => {
-  res.render("signup");
+  res.redirect("/#/signup");
 });
 auth.get("/dashboard", checkNotAuthenticated, (req, res) => {
-  res.render("dashboard", { user: req.user.first_name });
+  res.redirect("/#/user", { user: req.user.first_name });
 });
 
 auth.post("/signup", async (req, res) => {
@@ -83,7 +82,7 @@ auth.post("/signup", async (req, res) => {
   }
 
   if (errors.length > 0) {
-    res.render("signup", { errors });
+    res.status(400).send({ errors: errors });
   } else {
     //Form validation passed
 
@@ -97,11 +96,12 @@ auth.post("/signup", async (req, res) => {
           throw err;
         }
         if (results.rows.length > 0) {
+          var resultUser = results.rows[0];
           errors.push({
             message:
               "The email has already been used. Please login or use a different email.",
           });
-          res.render("signup", { errors });
+          res.status(400).send({ errors: errors });
         } else {
           pool.query(
             "INSERT INTO users (email, password, first_name, last_name, username) VALUES ($1, $2, $3, $4, $5);",
@@ -114,7 +114,7 @@ auth.post("/signup", async (req, res) => {
                 "success_msg",
                 "You are now registered. Please login to continue."
               );
-              res.redirect("/api/auth/login");
+              res.status(200).send();
             }
           );
         }

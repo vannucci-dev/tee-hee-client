@@ -1,14 +1,14 @@
 import { NavBar } from "./Components/NavBar/Navbar";
 import { HashRouter as Router, Switch, Route } from "react-router-dom";
-import Home from "./Views/Home/Home";
+import Home from "./Routes/Home/Home";
 import AlertDismissibleExample from "./Components/Alert/Alert";
 import Footer from "./Components/Footer/Footer";
-import Product from "./Views/Product/Product";
-import Login from "./Views/Login/Login";
-import Signup from "./Views/Signup/Signup";
-import User from "./Views/User/User";
-import CartCanvas from "./Views/Cart/Cart";
-import Cart from "./Views/Cart/Cart";
+import Product from "./Routes/Product/Product";
+import Login from "./Routes/Login/Login";
+import Signup from "./Routes/Signup/Signup";
+import User from "./Routes/User/User";
+import CartCanvas from "./Routes/Cart/Cart";
+import Cart from "./Routes/Cart/Cart";
 import { useState } from "react";
 import SingleProduct from "./Components/SingleProduct/SingleProduct";
 
