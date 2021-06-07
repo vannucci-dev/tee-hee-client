@@ -74,13 +74,13 @@ auth.post("/signup", async (req, res) => {
           res.status(400).send({ errors: errors });
         } else {
           pool.query(
-            "INSERT INTO users (email, password, first_name, last_name, username) VALUES ($1, $2, $3, $4, $5);",
+            "INSERT INTO users (email, password, first_name, last_name, username) VALUES ($1, $2, $3, $4, $5) RETURNING user_id;",
             [email, hashedPassword, first_name, last_name, username],
             (err, results) => {
               if (err) {
                 throw err;
               }
-              res.status(200).send();
+              res.status(200).send(results.rows[0]);
             }
           );
         }
@@ -101,6 +101,7 @@ auth.post(
     console.log("loggedin", req.user);
 
     var userInfo = {
+      userID: req.user.user_id,
       username: req.user.username,
       name: req.user.first_name,
       email: req.user.email,

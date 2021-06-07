@@ -14,8 +14,9 @@ export default function Signup(props) {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [redirectTo, setRedirectTo] = useState("");
-  const [success, setSuccess] = useState(false);
   const [error, setError] = useState(false);
+
+  let userId;
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -43,6 +44,23 @@ export default function Signup(props) {
     }
   };
 
+  const createNewCart = (id) => {
+    axios({
+      url: "/api/carts",
+      method: "POST",
+      data: {
+        user_id: id,
+      },
+    })
+      .then((res) => {
+        console.log("Cart created");
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   const signUp = (e) => {
     e.preventDefault();
 
@@ -63,15 +81,19 @@ export default function Signup(props) {
         const isAuthenticated = res.data.isAuthenticated;
         window.localStorage.setItem("isAuthenticated", isAuthenticated);
         if (res.status === 200) {
-          setSuccess(true);
           setError(false);
+          console.log("result from post signup:");
+          console.log(res);
+          userId = res.data.user_id;
+          console.log("User is now:");
+          console.log(userId);
+          createNewCart(userId);
           setRedirectTo("/login");
         }
       })
       .catch(({ response }) => {
         setError(false);
         setError(response.data.errors);
-        setSuccess(false);
       });
   };
 
