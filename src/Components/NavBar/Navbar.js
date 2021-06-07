@@ -4,8 +4,49 @@ import Nav from "react-bootstrap/Nav";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import Form from "react-bootstrap/Form";
 import FormControl from "react-bootstrap/FormControl";
+import axios from "axios";
 
-export const NavBar = ({ handleMouseDown }) => {
+export default function NavBar({
+  isLoggedOut,
+  authenticated,
+  user,
+  handleMouseDown,
+}) {
+  const logOut = (e) => {
+    e.preventDefault();
+
+    axios({
+      url: "/api/auth/logout",
+      method: "GET",
+    })
+      .then((res) => {
+        if (res.status === 200) {
+          isLoggedOut(res.data);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const isAuthenticated = (auth) => {
+    if (auth) {
+      return (
+        <div>
+          Hello <a href="/#/user">{user.name}</a>!{" "}
+          <Nav.Link onClick={logOut}>Logout</Nav.Link>
+        </div>
+      );
+    } else {
+      return (
+        <div>
+          <Nav.Link href="/#/login">Login</Nav.Link>
+          <Nav.Link href="/#/signup">Signup</Nav.Link>
+        </div>
+      );
+    }
+  };
+
   return (
     <Navbar expand="lg" style={{ backgroundColor: "#faf1e6" }}>
       <img
@@ -30,9 +71,7 @@ export const NavBar = ({ handleMouseDown }) => {
           </NavDropdown>
         </Nav>
         <Nav>
-          <Nav.Link href="/#/login">Login</Nav.Link>
-          <Nav.Link href="/#/signup">Signup</Nav.Link>
-
+          {isAuthenticated(authenticated)}
           <Form inline>
             <FormControl type="text" placeholder="Search" className="mr-sm-2" />
           </Form>
@@ -46,4 +85,4 @@ export const NavBar = ({ handleMouseDown }) => {
       </Navbar.Collapse>
     </Navbar>
   );
-};
+}

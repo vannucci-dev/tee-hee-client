@@ -1,5 +1,8 @@
-import { NavBar } from "./Components/NavBar/Navbar";
+import React, { useState, useEffect } from "react";
 import { HashRouter as Router, Switch, Route } from "react-router-dom";
+import axios from "axios";
+
+import NavBar from "./Components/NavBar/Navbar";
 import Home from "./Routes/Home/Home";
 import AlertDismissibleExample from "./Components/Alert/Alert";
 import Footer from "./Components/Footer/Footer";
@@ -7,14 +10,21 @@ import Product from "./Routes/Product/Product";
 import Login from "./Routes/Login/Login";
 import Signup from "./Routes/Signup/Signup";
 import User from "./Routes/User/User";
-import CartCanvas from "./Routes/Cart/Cart";
 import Cart from "./Routes/Cart/Cart";
-import { useState } from "react";
 import SingleProduct from "./Components/SingleProduct/SingleProduct";
 
 export default function App() {
   const [visible, setVisible] = useState();
+  const [authenticated, setAuthenticated] = useState(false);
+  const [user, setUser] = useState({});
+  const [loggedOut, setLoggedOut] = useState(false);
 
+  console.log("user in app.js:");
+  console.log(user);
+
+  const handleUser = (newUser) => {
+    setUser(newUser);
+  };
   const toggleMenu = () => {
     setVisible(!visible);
   };
@@ -22,54 +32,80 @@ export default function App() {
     toggleMenu();
     e.stopPropagation();
   };
+  const isLoggedOut = (value) => {
+    setLoggedOut(value);
+  };
+
+  useEffect(() => {
+    axios
+      .get("/api/auth/login")
+      .then((res) => {
+        console.log("is authenticated? From App.js: ");
+        console.log(res);
+        if (res.data) {
+          setAuthenticated(true);
+        } else {
+          setAuthenticated(false);
+        }
+      })
+      .catch((error) => {
+        console.log("Error in request App.js: ");
+        console.log(error);
+        setAuthenticated(false);
+      });
+  }, [user, loggedOut]);
+
   return (
     <Router>
-      <div>
-        <Switch>
-          <Route path="/" exact>
-            <AlertDismissibleExample />
-          </Route>
-        </Switch>
-        <NavBar handleMouseDown={handleMouseDown} />
-        <Cart handleMouseDown={handleMouseDown} menuVisibility={visible} />
-        <Switch>
-          <Route path="/login">
-            <Login />
-          </Route>
-          <Route path="/cart">
-            <CartCanvas />
-          </Route>
-          <Route path="/signup">
-            <Signup />
-          </Route>
-          <Route path="/posters">
-            <Product
-              title="poster"
-              src="https://images.unsplash.com/photo-1491252645376-253f0f174d78?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1372&q=80"
-            />
-          </Route>
-          <Route path="/mugs">
-            <Product
-              title="mug"
-              src="https://images.unsplash.com/photo-1602632066350-4206c806ebdb?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1349&q=80"
-            />
-          </Route>
-          <Route path="/shirts">
-            <Product
-              title="shirt"
-              src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
-            />
-          </Route>
-          <Route path="/products/:id" children={<SingleProduct />} />
-          <Route path="/user">
-            <User />
-          </Route>
-          <Route path="/">
-            <Home />
-          </Route>
-        </Switch>
-        <Footer />
-      </div>
+      <Switch>
+        <Route path="/" exact>
+          <AlertDismissibleExample />
+        </Route>
+      </Switch>
+      <NavBar
+        handleMouseDown={handleMouseDown}
+        authenticated={authenticated}
+        user={user}
+        isLoggedOut={isLoggedOut}
+      />
+      <Cart handleMouseDown={handleMouseDown} menuVisibility={visible} />
+      <Switch>
+        <Route path="/login">
+          <Login handleUser={handleUser} authenticated={authenticated} />
+        </Route>
+        <Route path="/cart">
+          <div>Cart</div>
+        </Route>
+        <Route path="/signup">
+          <Signup />
+        </Route>
+        <Route path="/posters">
+          <Product
+            title="poster"
+            src="https://images.unsplash.com/photo-1491252645376-253f0f174d78?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1372&q=80"
+          />
+        </Route>
+        <Route path="/mugs">
+          <Product
+            title="mug"
+            src="https://images.unsplash.com/photo-1602632066350-4206c806ebdb?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1349&q=80"
+          />
+        </Route>
+        <Route path="/shirts">
+          <Product
+            title="shirt"
+            src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
+          />
+        </Route>
+        <Route path="/products/:id" children={<SingleProduct />} />
+        <Route path="/user">
+          <User user={user} authenticated={authenticated} />
+        </Route>
+        <Route path="/">
+          <Home handleMouseDown={handleMouseDown} menuVisibility={visible} />
+        </Route>
+      </Switch>
+      <Footer />
     </Router>
   );
 }
