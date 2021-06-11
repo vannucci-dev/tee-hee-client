@@ -10,6 +10,7 @@ export default function NavBar({
   isLoggedOut,
   authenticated,
   user,
+  cart,
   handleMouseDown,
 }) {
   const logOut = (e) => {

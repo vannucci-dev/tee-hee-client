@@ -6,7 +6,7 @@ import Hero from "../../Components/Hero/Hero";
 import { Link, Redirect, useLocation } from "react-router-dom";
 import axios from "axios";
 
-export default function Login({ handleUser, authenticated }) {
+export default function Login({ handleCart, handleUser, authenticated }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [alreadyAuthenticated, setAlreadyAuthenticated] = useState(false);
@@ -20,6 +20,20 @@ export default function Login({ handleUser, authenticated }) {
       setPassword(e.target.value);
     }
   };
+  const getCart = (id) => {
+    axios({
+      url: `/api/carts/${id}`,
+      method: "GET",
+    })
+      .then((res) => {
+        console.log("Cart created in Login.js");
+        handleCart(res.data[0]);
+      })
+      .catch((err) => {
+        console.log("Error trying to catch cart:");
+        console.log(err);
+      });
+  };
   const logIn = (e) => {
     e.preventDefault();
     axios({
@@ -31,11 +45,10 @@ export default function Login({ handleUser, authenticated }) {
       },
     })
       .then((res) => {
-        console.log("response in login.js: ");
-        console.log(res);
         if (res.status === 200) {
           setAlreadyAuthenticated(true);
           handleUser(res.data);
+          getCart(parseInt(res.data.userID));
         }
       })
       .catch(({ response }) => {

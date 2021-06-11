@@ -18,12 +18,13 @@ export default function App() {
   const [authenticated, setAuthenticated] = useState(false);
   const [user, setUser] = useState({});
   const [loggedOut, setLoggedOut] = useState(false);
-
-  console.log("user in app.js:");
-  console.log(user);
+  const [cart, setCart] = useState({});
 
   const handleUser = (newUser) => {
     setUser(newUser);
+  };
+  const handleCart = (newCart) => {
+    setCart(newCart);
   };
   const toggleMenu = () => {
     setVisible(!visible);
@@ -40,8 +41,6 @@ export default function App() {
     axios
       .get("/api/auth/login")
       .then((res) => {
-        console.log("is authenticated? From App.js: ");
-        console.log(res);
         if (res.data) {
           setAuthenticated(true);
         } else {
@@ -54,6 +53,23 @@ export default function App() {
         setAuthenticated(false);
       });
   }, [user, loggedOut]);
+
+  useEffect(() => {
+    if (user.username !== undefined) {
+      console.log("user in app.js:");
+      console.log(user.username);
+    }
+  }, [user]);
+  useEffect(() => {
+    if (cart.cartname !== undefined) {
+      console.log("cartID in app.js:");
+      console.log(cart.cart_id);
+    }
+  }, [cart]);
+  useEffect(() => {
+    console.log("Authenticated:");
+    console.log(authenticated);
+  }, [authenticated]);
 
   return (
     <Router>
@@ -68,10 +84,22 @@ export default function App() {
         user={user}
         isLoggedOut={isLoggedOut}
       />
-      <Cart handleMouseDown={handleMouseDown} menuVisibility={visible} />
+      {authenticated ? (
+        <Cart
+          cart={cart}
+          handleMouseDown={handleMouseDown}
+          menuVisibility={visible}
+        />
+      ) : (
+        ""
+      )}
       <Switch>
         <Route path="/login">
-          <Login handleUser={handleUser} authenticated={authenticated} />
+          <Login
+            handleCart={handleCart}
+            handleUser={handleUser}
+            authenticated={authenticated}
+          />
         </Route>
         <Route path="/cart">
           <div>Cart</div>

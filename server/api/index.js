@@ -8,6 +8,7 @@ const swaggerUi = require("swagger-ui-express");
 const fs = require("fs");
 const yaml = require("js-yaml");
 const path = require("path");
+const cart_items = require("./routes/cart_items");
 
 const swaggerDocument = yaml.load(
   fs.readFileSync(path.resolve(__dirname, "../swagger.yml"), "utf8")
@@ -23,6 +24,7 @@ api.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 api.use("/users", users);
 api.use("/carts", carts);
+api.use("/cart-items", cart_items);
 api.use("/products", products);
 api.use("/auth", auth);
 api.use("/orders", orders);

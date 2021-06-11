@@ -13,7 +13,7 @@ const getAllCarts = (req, res) => {
 const getCartById = (req, res) => {
   const id = parseInt(req.params.id);
 
-  pool.query("SELECT * FROM carts WHERE cart_id = $1", [id], (err, results) => {
+  pool.query("SELECT * FROM carts WHERE user_id = $1", [id], (err, results) => {
     if (err) {
       throw err;
     }
