@@ -4,9 +4,15 @@ import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
 import Hero from "../../Components/Hero/Hero";
 import { Link, Redirect, useLocation } from "react-router-dom";
-import axios from "axios";
 
-export default function Login({ handleCart, handleUser, authenticated }) {
+import { getCart, getCartItems, logIn } from "../../utilities/axios";
+
+export default function Login({
+  handleCart,
+  handleUser,
+  authenticated,
+  handleCartItems,
+}) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [alreadyAuthenticated, setAlreadyAuthenticated] = useState(false);
@@ -20,41 +26,22 @@ export default function Login({ handleCart, handleUser, authenticated }) {
       setPassword(e.target.value);
     }
   };
-  const getCart = (id) => {
-    axios({
-      url: `/api/carts/${id}`,
-      method: "GET",
-    })
-      .then((res) => {
-        console.log("Cart created in Login.js");
-        handleCart(res.data[0]);
-      })
-      .catch((err) => {
-        console.log("Error trying to catch cart:");
-        console.log(err);
-      });
-  };
-  const logIn = (e) => {
+
+  const handleLogin = async (e) => {
     e.preventDefault();
-    axios({
-      url: "/api/auth/login",
-      method: "POST",
-      data: {
-        username: username,
-        password: password,
-      },
-    })
-      .then((res) => {
-        if (res.status === 200) {
-          setAlreadyAuthenticated(true);
-          handleUser(res.data);
-          getCart(parseInt(res.data.userID));
-        }
-      })
-      .catch(({ response }) => {
-        console.log("Error from login.js: ");
-        console.log(response);
-      });
+
+    let loginResponse = await logIn(username, password);
+
+    handleUser(loginResponse);
+    setAlreadyAuthenticated(true);
+
+    let cart = await getCart(parseInt(loginResponse.userID));
+
+    handleCart(cart[0]);
+
+    let cartItems = await getCartItems(cart[0].cart_id);
+
+    handleCartItems(await cartItems);
   };
 
   let message = null;
@@ -76,7 +63,11 @@ export default function Login({ handleCart, handleUser, authenticated }) {
             alt="username-hero-image"
           />
           {message ? <div>{message}</div> : ""}
-          <Form action="/api/auth/login" method="post" onSubmit={logIn}>
+          <Form
+            action="/api/auth/login"
+            method="post"
+            onSubmit={(e) => handleLogin(e)}
+          >
             <Form.Group
               className="mb-3"
               controlId="formBasicEmail"

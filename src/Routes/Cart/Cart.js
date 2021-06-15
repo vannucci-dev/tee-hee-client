@@ -2,10 +2,9 @@ import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
 import React, { useEffect, useState } from "react";
 import "./cart.css";
-import axios from "axios";
+import { getProduct } from "../../utilities/axios";
 
-export default function Cart({ menuVisibility, handleMouseDown, cart }) {
-  const [cartItems, setCartItems] = useState([]);
+export default function Cart({ menuVisibility, handleMouseDown, cartItems }) {
   const [items, setItems] = useState([]);
 
   let visibility = "hide";
@@ -14,45 +13,16 @@ export default function Cart({ menuVisibility, handleMouseDown, cart }) {
     visibility = "show";
   }
 
-  const getItemsInfo = (id) => {
-    if (!isNaN(id)) {
-      axios({
-        url: `/api/products/${id}`,
-        method: "GET",
-      })
-        .then((res) => {
-          setItems((items) => [...items, res.data[0]]);
-        })
-        .catch((err) => {
-          console.log("error while fetching item info: ");
-          console.log(err);
-        });
-    } else {
-      console.log("ID is NAN in getItemsInfo");
-    }
-  };
-
   useEffect(() => {
-    let id = parseInt(cart.cart_id);
-    if (!isNaN(id)) {
-      axios({
-        url: `/api/cart-items/${id}`,
-        method: "GET",
-      })
-        .then((res) => {
-          console.log("The items in the cart are:");
-          console.log(res.data);
-          res.data.forEach((item) => {
-            setCartItems((cartItems) => [...cartItems, item]);
-            getItemsInfo(item.product_id);
-          });
-        })
-        .catch((err) => {
-          console.log("error while fetching item IDs: ");
-          console.log(err);
-        });
-    }
-  }, [cart]);
+    cartItems.map(async (item, index) => {
+      const product = await getProduct(item.product_id);
+
+      setItems((items) => [...items, product[0]]);
+    });
+    return () => {
+      setItems([]);
+    };
+  }, [cartItems]);
 
   let total = 0;
 
@@ -74,9 +44,9 @@ export default function Cart({ menuVisibility, handleMouseDown, cart }) {
                 <hr />
                 <div className="cart-items">
                   <div className="cart-item">
-                    <h5>{product.name}</h5>
                     <div style={{ display: "flex", alignItems: "center" }}>
                       <img alt={product.name} src={product.image_link} />
+                      <h5>{product.name}</h5>
                       <p>{product.description}</p>
                     </div>
                   </div>

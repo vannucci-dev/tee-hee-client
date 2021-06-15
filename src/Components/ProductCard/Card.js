@@ -22,6 +22,8 @@ export default function ProductCard(props) {
         <Card.Text>{props.description}</Card.Text>
 
         <Button variant="outline-dark">Add to Cart</Button>
+        <label for="quantity">Quantity:</label>
+        <input type="number" min="1" max="10" name="quantity" id="quantity" />
       </Card.Body>
     </Card>
   );

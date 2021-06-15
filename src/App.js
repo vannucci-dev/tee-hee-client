@@ -19,6 +19,11 @@ export default function App() {
   const [user, setUser] = useState({});
   const [loggedOut, setLoggedOut] = useState(false);
   const [cart, setCart] = useState({});
+  const [cartItems, setCartItems] = useState([]);
+
+  const handleCartItems = (newItems) => {
+    setCartItems(newItems);
+  };
 
   const handleUser = (newUser) => {
     setUser(newUser);
@@ -55,21 +60,9 @@ export default function App() {
   }, [user, loggedOut]);
 
   useEffect(() => {
-    if (user.username !== undefined) {
-      console.log("user in app.js:");
-      console.log(user.username);
-    }
-  }, [user]);
-  useEffect(() => {
-    if (cart.cartname !== undefined) {
-      console.log("cartID in app.js:");
-      console.log(cart.cart_id);
-    }
-  }, [cart]);
-  useEffect(() => {
-    console.log("Authenticated:");
-    console.log(authenticated);
-  }, [authenticated]);
+    console.log("Cart Items in App.js:");
+    console.log(cartItems);
+  }, [cartItems]);
 
   return (
     <Router>
@@ -86,9 +79,9 @@ export default function App() {
       />
       {authenticated ? (
         <Cart
-          cart={cart}
           handleMouseDown={handleMouseDown}
           menuVisibility={visible}
+          cartItems={cartItems}
         />
       ) : (
         ""
@@ -99,6 +92,7 @@ export default function App() {
             handleCart={handleCart}
             handleUser={handleUser}
             authenticated={authenticated}
+            handleCartItems={handleCartItems}
           />
         </Route>
         <Route path="/cart">
@@ -125,7 +119,12 @@ export default function App() {
             src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
           />
         </Route>
-        <Route path="/products/:id" children={<SingleProduct />} />
+        <Route
+          path="/products/:id"
+          children={
+            <SingleProduct handleCartItems={handleCartItems} cart={cart} />
+          }
+        />
         <Route path="/user">
           <User user={user} authenticated={authenticated} />
         </Route>

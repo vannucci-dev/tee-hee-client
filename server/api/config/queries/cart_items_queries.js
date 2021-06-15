@@ -26,7 +26,7 @@ const addNewItemInCartItems = (req, res) => {
       if (err) {
         throw err;
       }
-      res.status(201).json(req.body);
+      res.status(201).send(req.body);
     }
   );
 };
