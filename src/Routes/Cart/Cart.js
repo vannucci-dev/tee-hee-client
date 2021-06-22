@@ -1,10 +1,15 @@
 import Button from "react-bootstrap/Button";
-import Container from "react-bootstrap/Container";
+import OrderCard from "../../Components/OrderCard/OrderCard";
 import React, { useEffect, useState } from "react";
 import "./cart.css";
 import { getProduct } from "../../utilities/axios";
 
-export default function Cart({ menuVisibility, handleMouseDown, cartItems }) {
+export default function Cart({
+  handleItems,
+  menuVisibility,
+  handleMouseDown,
+  cartItems,
+}) {
   const [items, setItems] = useState([]);
 
   let visibility = "hide";
@@ -14,7 +19,7 @@ export default function Cart({ menuVisibility, handleMouseDown, cartItems }) {
   }
 
   useEffect(() => {
-    cartItems.map(async (item, index) => {
+    cartItems.map(async (item) => {
       const product = await getProduct(item.product_id);
 
       setItems((items) => [...items, product[0]]);
@@ -25,7 +30,7 @@ export default function Cart({ menuVisibility, handleMouseDown, cartItems }) {
   }, [cartItems]);
 
   let total = 0;
-
+  handleItems(items);
   return (
     <div id="flyoutMenu" className={visibility}>
       {cartItems.length < 1 ? (
@@ -40,26 +45,11 @@ export default function Cart({ menuVisibility, handleMouseDown, cartItems }) {
           {items.map((product, index) => {
             total += parseFloat(product.price * cartItems[index].quantity);
             return (
-              <Container fluid className="container">
-                <hr />
-                <div className="cart-items">
-                  <div className="cart-item">
-                    <div style={{ display: "flex", alignItems: "center" }}>
-                      <img alt={product.name} src={product.image_link} />
-                      <h5>{product.name}</h5>
-                      <p>{product.description}</p>
-                    </div>
-                  </div>
-                  <div className="cart-item">
-                    <h5>Quantity</h5>
-                    <p>{cartItems[index].quantity}</p>
-                  </div>
-                  <div className="cart-item">
-                    <h5>Price</h5>
-                    <p>£{product.price}</p>
-                  </div>
-                </div>
-              </Container>
+              <OrderCard
+                product={product}
+                index={index}
+                cartItems={cartItems}
+              />
             );
           })}
 

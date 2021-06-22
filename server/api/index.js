@@ -27,6 +27,6 @@ api.use("/carts", carts);
 api.use("/cart-items", cart_items);
 api.use("/products", products);
 api.use("/auth", auth);
-api.use("/orders", orders);
+api.use("/order", orders);
 
 module.exports = api;

@@ -11,7 +11,8 @@ import Login from "./Routes/Login/Login";
 import Signup from "./Routes/Signup/Signup";
 import User from "./Routes/User/User";
 import Cart from "./Routes/Cart/Cart";
-import SingleProduct from "./Components/SingleProduct/SingleProduct";
+import Order from "./Routes/Order/Order";
+import SingleProduct from "./Routes/SingleProduct/SingleProduct";
 
 export default function App() {
   const [visible, setVisible] = useState();
@@ -20,9 +21,14 @@ export default function App() {
   const [loggedOut, setLoggedOut] = useState(false);
   const [cart, setCart] = useState({});
   const [cartItems, setCartItems] = useState([]);
+  const [items, setItems] = useState([]);
 
   const handleCartItems = (newItems) => {
     setCartItems(newItems);
+  };
+
+  const handleItems = (newItems) => {
+    setItems(newItems);
   };
 
   const handleUser = (newUser) => {
@@ -79,6 +85,7 @@ export default function App() {
       />
       {authenticated ? (
         <Cart
+          handleItems={handleItems}
           handleMouseDown={handleMouseDown}
           menuVisibility={visible}
           cartItems={cartItems}
@@ -127,6 +134,15 @@ export default function App() {
         />
         <Route path="/user">
           <User user={user} authenticated={authenticated} />
+        </Route>
+        <Route path="/order">
+          <Order
+            cartItems={cartItems}
+            user={user}
+            items={items}
+            cartItems={cartItems}
+            authenticated={authenticated}
+          />
         </Route>
         <Route path="/">
           <Home handleMouseDown={handleMouseDown} menuVisibility={visible} />

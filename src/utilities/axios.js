@@ -56,3 +56,16 @@ export const getProduct = async (id) => {
     throw err.response.data;
   }
 };
+
+export const addToOrder = async (user_id, total, status) => {
+  try {
+    const response = await axios({
+      url: `/api/order`,
+      method: "POST",
+      data: { total, status, user_id },
+    });
+    return response.data;
+  } catch (err) {
+    throw err.response.data;
+  }
+};
