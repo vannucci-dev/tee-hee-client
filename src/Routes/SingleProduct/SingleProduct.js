@@ -12,7 +12,7 @@ import {
   getProduct,
 } from "../../utilities/axios";
 
-export default function SingleProduct({ cart, handleCartItems }) {
+export default function SingleProduct({ cart, handleCartItems, handleItems }) {
   const [productSingle, setProductSingle] = useState([]);
   const [quantity, setQuantity] = useState("");
   const [added, setAdded] = useState(false);
@@ -31,6 +31,7 @@ export default function SingleProduct({ cart, handleCartItems }) {
     let cartID = await addToCartItems(cart, id, newQuantity);
     let newCartItems = await getCartItems(cartID);
     handleCartItems(newCartItems);
+    handleItems(productSingle[0]);
     setAdded(true);
   };
 

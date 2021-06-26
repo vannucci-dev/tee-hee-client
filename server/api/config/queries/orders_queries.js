@@ -14,7 +14,7 @@ const getOrderById = (req, res) => {
   const id = parseInt(req.params.id);
 
   pool.query(
-    "SELECT * FROM orders WHERE order_id = $1",
+    "SELECT * FROM orders WHERE user_id = $1",
     [id],
     (err, results) => {
       if (err) {

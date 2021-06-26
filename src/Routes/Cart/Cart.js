@@ -1,17 +1,16 @@
+import { useEffect } from "react";
 import Button from "react-bootstrap/Button";
 import OrderCard from "../../Components/OrderCard/OrderCard";
-import React, { useEffect, useState } from "react";
 import "./cart.css";
 import { getProduct } from "../../utilities/axios";
 
 export default function Cart({
-  handleItems,
   menuVisibility,
   handleMouseDown,
   cartItems,
+  items,
+  handleItems,
 }) {
-  const [items, setItems] = useState([]);
-
   let visibility = "hide";
 
   if (menuVisibility) {
@@ -19,18 +18,35 @@ export default function Cart({
   }
 
   useEffect(() => {
-    cartItems.map(async (item) => {
-      const product = await getProduct(item.product_id);
-
-      setItems((items) => [...items, product[0]]);
-    });
+    if (cartItems.length !== items.length) {
+      const iterateCartItems = async () => {
+        for (const item of cartItems) {
+          const response = await getProduct(item.product_id);
+          handleItems(response[0]);
+        }
+      };
+      iterateCartItems();
+    }
     return () => {
-      setItems([]);
+      handleItems("reset");
     };
   }, [cartItems]);
 
+  const renderItems = () => {
+    if (cartItems.length === items.length) {
+      return items.map((product, index) => {
+        total += parseFloat(product.price * cartItems[index].quantity);
+        return (
+          <OrderCard product={product} index={index} cartItems={cartItems} />
+        );
+      });
+    } else {
+      return <div>Loading...</div>;
+    }
+  };
+
   let total = 0;
-  handleItems(items);
+
   return (
     <div id="flyoutMenu" className={visibility}>
       {cartItems.length < 1 ? (
@@ -42,16 +58,7 @@ export default function Cart({
         <div>
           <h3 style={{ marginTop: "3rem" }}>Your shopping cart: </h3>
           <button onMouseDown={handleMouseDown}>X</button>
-          {items.map((product, index) => {
-            total += parseFloat(product.price * cartItems[index].quantity);
-            return (
-              <OrderCard
-                product={product}
-                index={index}
-                cartItems={cartItems}
-              />
-            );
-          })}
+          {renderItems()}
 
           <hr />
           <h4 className="total">Total:</h4>

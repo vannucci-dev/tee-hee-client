@@ -1,18 +1,26 @@
-import { Redirect } from "react-router-dom";
+import { Redirect, Link } from "react-router-dom";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Hero from "../../Components/Hero/Hero";
 import OrderCard from "../../Components/OrderCard/OrderCard";
 import "./order.css";
-import { addToOrder } from "../../utilities/axios";
+import { addToOrder, getOrder } from "../../utilities/axios";
 
-export default function Order({ user, authenticated, cartItems, items }) {
+export default function Order({
+  user,
+  authenticated,
+  cartItems,
+  items,
+  handleOrder,
+}) {
   let total = 0;
 
-  const handleOrderCreation = () => {
+  const handleOrderCreation = async () => {
     console.log(user);
-    addToOrder(user.userID, total, "pending");
+    const added = await addToOrder(user.userID, total, "pending");
+    const response = await getOrder(added.user_id);
+    handleOrder(response[0]);
   };
 
   return (
@@ -30,7 +38,9 @@ export default function Order({ user, authenticated, cartItems, items }) {
             </Col>
             <Col>
               {items.map((product, index) => {
-                total += parseFloat(product.price * cartItems[index].quantity);
+                total += Number(
+                  (product.price * cartItems[index].quantity).toFixed(2)
+                );
                 return (
                   <OrderCard
                     product={product}
@@ -43,7 +53,11 @@ export default function Order({ user, authenticated, cartItems, items }) {
           </Row>
           <div>Total:</div>
           <div>{total}</div>
-          <button onMouseDown={handleOrderCreation}>Proceed to payment</button>
+          <Link to="/checkout">
+            <button role="link" onMouseDown={handleOrderCreation}>
+              Proceed to payment
+            </button>
+          </Link>
         </Container>
       ) : (
         <Redirect to="/login" />

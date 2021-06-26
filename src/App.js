@@ -13,6 +13,7 @@ import User from "./Routes/User/User";
 import Cart from "./Routes/Cart/Cart";
 import Order from "./Routes/Order/Order";
 import SingleProduct from "./Routes/SingleProduct/SingleProduct";
+import Payment from "./Routes/Stripe/Payment";
 
 export default function App() {
   const [visible, setVisible] = useState();
@@ -22,13 +23,21 @@ export default function App() {
   const [cart, setCart] = useState({});
   const [cartItems, setCartItems] = useState([]);
   const [items, setItems] = useState([]);
+  const [order, setOrder] = useState([]);
 
   const handleCartItems = (newItems) => {
     setCartItems(newItems);
   };
+  const handleOrder = (newOrder) => {
+    setOrder((order) => [...order, newOrder]);
+  };
 
   const handleItems = (newItems) => {
-    setItems(newItems);
+    if (newItems === "reset") {
+      setItems([]);
+    } else {
+      setItems((items) => [...items, newItems]);
+    }
   };
 
   const handleUser = (newUser) => {
@@ -70,6 +79,16 @@ export default function App() {
     console.log(cartItems);
   }, [cartItems]);
 
+  useEffect(() => {
+    console.log("Items in App.js:");
+    console.log(items);
+  }, [items]);
+
+  useEffect(() => {
+    console.log("Orders in App.js:");
+    console.log(order);
+  }, [order]);
+
   return (
     <Router>
       <Switch>
@@ -89,6 +108,7 @@ export default function App() {
           handleMouseDown={handleMouseDown}
           menuVisibility={visible}
           cartItems={cartItems}
+          items={items}
         />
       ) : (
         ""
@@ -129,19 +149,33 @@ export default function App() {
         <Route
           path="/products/:id"
           children={
-            <SingleProduct handleCartItems={handleCartItems} cart={cart} />
+            <SingleProduct
+              handleCartItems={handleCartItems}
+              cart={cart}
+              cartItems={cartItems}
+              handleItems={handleItems}
+            />
           }
         />
         <Route path="/user">
-          <User user={user} authenticated={authenticated} />
+          <User user={user} authenticated={authenticated} order={order} />
         </Route>
         <Route path="/order">
           <Order
             cartItems={cartItems}
             user={user}
             items={items}
-            cartItems={cartItems}
             authenticated={authenticated}
+            handleOrder={handleOrder}
+          />
+        </Route>
+        <Route path="/checkout">
+          <Payment
+            items={items}
+            cartItems={cartItems}
+            user={user}
+            authenticated={authenticated}
+            order={order}
           />
         </Route>
         <Route path="/">

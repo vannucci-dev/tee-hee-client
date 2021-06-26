@@ -5,7 +5,7 @@ import Hero from "../../Components/Hero/Hero";
 import "./user.css";
 import { Redirect } from "react-router";
 
-export default function User({ user, authenticated }) {
+export default function User({ user, authenticated, order }) {
   return (
     <div>
       {authenticated ? (

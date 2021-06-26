@@ -69,3 +69,39 @@ export const addToOrder = async (user_id, total, status) => {
     throw err.response.data;
   }
 };
+
+export const getOrder = async (user_id) => {
+  try {
+    const response = await axios({ url: `/api/order/${user_id}` });
+    return response.data;
+  } catch (err) {
+    throw err.response.data;
+  }
+};
+
+export const addToOrderItems = async (
+  quantity,
+  price,
+  product_id,
+  name,
+  description,
+  order_id
+) => {
+  try {
+    const response = await axios({
+      url: `/api/order-items/`,
+      method: "POST",
+      data: {
+        quantity,
+        price,
+        product_id,
+        name,
+        description,
+        order_id,
+      },
+    });
+    return response.data;
+  } catch (err) {
+    throw err.response.data;
+  }
+};
