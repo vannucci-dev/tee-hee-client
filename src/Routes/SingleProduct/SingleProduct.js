@@ -11,8 +11,14 @@ import {
   getCartItems,
   getProduct,
 } from "../../utilities/axios";
+import { Link } from "react-router-dom";
 
-export default function SingleProduct({ cart, handleCartItems, handleItems }) {
+export default function SingleProduct({
+  cart,
+  handleCartItems,
+  handleItems,
+  authenticated,
+}) {
   const [productSingle, setProductSingle] = useState([]);
   const [quantity, setQuantity] = useState("");
   const [added, setAdded] = useState(false);
@@ -52,21 +58,30 @@ export default function SingleProduct({ cart, handleCartItems, handleItems }) {
               <p className="category-tag">{capitalize(product.category)}</p>
               <h3>£{product.price}</h3>
               <p>{capitalize(product.description)}</p>
-              <label for="quantity">Quantity:</label>
-              <input
-                type="number"
-                min="1"
-                max="10"
-                name="quantity"
-                id="quantity"
-                onChange={(e) => setQuantity(e.target.value)}
-              />
-              <Button
-                onClick={() => handleAdditionToCartItems(quantity)}
-                variant="outline-dark"
-              >
-                Add to Cart
-              </Button>
+              {authenticated ? (
+                <>
+                  <label for="quantity">Quantity:</label>
+                  <input
+                    type="number"
+                    min="1"
+                    max="10"
+                    name="quantity"
+                    id="quantity"
+                    onChange={(e) => setQuantity(e.target.value)}
+                  />
+
+                  <Button
+                    onClick={() => handleAdditionToCartItems(quantity)}
+                    variant="outline-dark"
+                  >
+                    Add to Cart
+                  </Button>
+                </>
+              ) : (
+                <Link to="/login">
+                  <Button>Login to continue</Button>
+                </Link>
+              )}
               {added ? <div>Added!</div> : ""}
             </Col>
           </Row>

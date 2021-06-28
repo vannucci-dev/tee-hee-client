@@ -5,6 +5,7 @@ import NavDropdown from "react-bootstrap/NavDropdown";
 import Form from "react-bootstrap/Form";
 import FormControl from "react-bootstrap/FormControl";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 export default function NavBar({
   isLoggedOut,
@@ -34,15 +35,15 @@ export default function NavBar({
     if (auth) {
       return (
         <div>
-          Hello <a href="/#/user">{user.name}</a>!{" "}
-          <Nav.Link onClick={logOut}>Logout</Nav.Link>
+          Hello <Link to="/user">{user.name}</Link>!{" "}
+          <Link onClick={logOut}>Logout</Link>
         </div>
       );
     } else {
       return (
         <div>
-          <Nav.Link href="/#/login">Login</Nav.Link>
-          <Nav.Link href="/#/signup">Signup</Nav.Link>
+          <Link to="/login">Login</Link>
+          <Link to="/signup">Signup</Link>
         </div>
       );
     }
@@ -61,14 +62,13 @@ export default function NavBar({
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="mr-auto">
-          <Nav.Link href="/">Home</Nav.Link>
-          <Nav.Link href="#link">About Us</Nav.Link>
+          <Link to="/">Home</Link>
           <NavDropdown title="Shop" id="basic-nav-dropdown">
-            <NavDropdown.Item href="/#/shirts">T-shirts</NavDropdown.Item>
-            <NavDropdown.Item href="/#/posters">Posters</NavDropdown.Item>
-            <NavDropdown.Item href="/#/mugs">Mugs</NavDropdown.Item>
+            <Link to="/shirts">T-shirts</Link>
             <NavDropdown.Divider />
-            <NavDropdown.Item href="#action/3.4">About us</NavDropdown.Item>
+            <Link to="/posters">Posters</Link>
+            <NavDropdown.Divider />
+            <Link to="/mugs">Mugs</Link>
           </NavDropdown>
         </Nav>
         <Nav>
@@ -76,9 +76,6 @@ export default function NavBar({
           <Form inline>
             <FormControl type="text" placeholder="Search" className="mr-sm-2" />
           </Form>
-          <Nav.Link href="/#/cart" md={{ span: 4, offset: 4 }}>
-            Cart
-          </Nav.Link>
           <button onMouseDown={handleMouseDown}>
             <i class="fas fa-shopping-cart"></i>
           </button>

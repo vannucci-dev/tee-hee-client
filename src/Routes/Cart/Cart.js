@@ -3,6 +3,7 @@ import Button from "react-bootstrap/Button";
 import OrderCard from "../../Components/OrderCard/OrderCard";
 import "./cart.css";
 import { getProduct } from "../../utilities/axios";
+import { Link } from "react-router-dom";
 
 export default function Cart({
   menuVisibility,
@@ -64,9 +65,11 @@ export default function Cart({
           <h4 className="total">Total:</h4>
           <p className="total">£{total}</p>
 
-          <Button className="checkout" variant="outline-dark">
-            Proceed to payment
-          </Button>
+          <Link to="/order" onClick={handleMouseDown}>
+            <Button className="checkout" variant="outline-dark">
+              Proceed to payment
+            </Button>
+          </Link>
         </div>
       )}
     </div>

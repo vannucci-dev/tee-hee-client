@@ -92,9 +92,7 @@ export default function App() {
   return (
     <Router>
       <Switch>
-        <Route path="/" exact>
-          <AlertDismissibleExample />
-        </Route>
+        <Route path="/" exact></Route>
       </Switch>
       <NavBar
         handleMouseDown={handleMouseDown}
@@ -132,18 +130,30 @@ export default function App() {
           <Product
             title="poster"
             src="https://images.unsplash.com/photo-1491252645376-253f0f174d78?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1372&q=80"
+            cart={cart}
+            handleCartItems={handleCartItems}
+            handleItems={handleItems}
+            authenticated={authenticated}
           />
         </Route>
         <Route path="/mugs">
           <Product
             title="mug"
             src="https://images.unsplash.com/photo-1602632066350-4206c806ebdb?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1349&q=80"
+            cart={cart}
+            handleCartItems={handleCartItems}
+            handleItems={handleItems}
+            authenticated={authenticated}
           />
         </Route>
         <Route path="/shirts">
           <Product
             title="shirt"
             src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
+            cart={cart}
+            handleCartItems={handleCartItems}
+            handleItems={handleItems}
+            authenticated={authenticated}
           />
         </Route>
         <Route
@@ -154,6 +164,7 @@ export default function App() {
               cart={cart}
               cartItems={cartItems}
               handleItems={handleItems}
+              authenticated={authenticated}
             />
           }
         />
@@ -170,6 +181,7 @@ export default function App() {
           />
         </Route>
         <Route path="/checkout">
+          <AlertDismissibleExample />
           <Payment
             items={items}
             cartItems={cartItems}
@@ -179,7 +191,12 @@ export default function App() {
           />
         </Route>
         <Route path="/">
-          <Home handleMouseDown={handleMouseDown} menuVisibility={visible} />
+          <Home
+            cart={cart}
+            handleCartItems={handleCartItems}
+            handleItems={handleItems}
+            authenticated={authenticated}
+          />
         </Route>
       </Switch>
       <Footer />

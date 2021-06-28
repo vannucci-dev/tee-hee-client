@@ -8,7 +8,12 @@ import Featured from "../../Components/Featured/Featured";
 import "./home.css";
 import { Link } from "react-router-dom";
 
-export default function Home(props) {
+export default function Home({
+  authenticated,
+  cart,
+  handleCartItems,
+  handleItems,
+}) {
   return (
     <div>
       <hr />
@@ -43,7 +48,12 @@ export default function Home(props) {
           </Col>
         </Row>
       </Container>
-      <Featured />
+      <Featured
+        authenticated={authenticated}
+        cart={cart}
+        handleCartItems={handleCartItems}
+        handleItems={handleItems}
+      />
     </div>
   );
 }

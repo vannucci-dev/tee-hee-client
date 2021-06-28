@@ -5,7 +5,12 @@ import Col from "react-bootstrap/Col";
 import axios from "axios";
 import ProductCard from "../ProductCard/Card";
 
-export default function Featured() {
+export default function Featured({
+  authenticated,
+  cart,
+  handleCartItems,
+  handleItems,
+}) {
   const [shirts, setShirts] = useState([]);
   const [mugs, setMugs] = useState([]);
   const [posters, setPosters] = useState([]);
@@ -65,10 +70,11 @@ export default function Featured() {
             {shirts.slice(0, 1).map((shirt) => {
               return (
                 <ProductCard
-                  name={shirt.name}
-                  price={shirt.price}
-                  description={shirt.description}
-                  image_link={shirt.image_link}
+                  product={shirt}
+                  authenticated={authenticated}
+                  cart={cart}
+                  handleCartItems={handleCartItems}
+                  handleItems={handleItems}
                 />
               );
             })}
@@ -76,10 +82,11 @@ export default function Featured() {
             {posters.slice(0, 1).map((poster) => {
               return (
                 <ProductCard
-                  name={poster.name}
-                  price={poster.price}
-                  description={poster.description}
-                  image_link={poster.image_link}
+                  product={poster}
+                  authenticated={authenticated}
+                  cart={cart}
+                  handleCartItems={handleCartItems}
+                  handleItems={handleItems}
                 />
               );
             })}
@@ -87,10 +94,11 @@ export default function Featured() {
             {mugs.slice(0, 1).map((mug) => {
               return (
                 <ProductCard
-                  name={mug.name}
-                  price={mug.price}
-                  description={mug.description}
-                  image_link={mug.image_link}
+                  product={mug}
+                  authenticated={authenticated}
+                  cart={cart}
+                  handleCartItems={handleCartItems}
+                  handleItems={handleItems}
                 />
               );
             })}

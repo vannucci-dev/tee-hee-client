@@ -4,13 +4,19 @@ import Container from "react-bootstrap/Container";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
-export default function ProductCarousel(props) {
+export default function ProductCarousel({
+  category,
+  authenticated,
+  cart,
+  handleCartItems,
+  handleItems,
+}) {
   const [productsState, setProductsState] = useState([]);
 
   useEffect(() => {
     const productsRequest = async () => {
       try {
-        const res = await axios.get(`/api/products/${props.category}`);
+        const res = await axios.get(`/api/products/${category}`);
         const { data } = res;
         setProductsState(data);
       } catch (err) {
@@ -18,7 +24,7 @@ export default function ProductCarousel(props) {
       }
     };
     productsRequest();
-  }, [props.category]);
+  }, [category]);
 
   return (
     <Carousel controls={false} interval={4000}>
@@ -27,10 +33,11 @@ export default function ProductCarousel(props) {
           {productsState.slice(0, 3).map((product) => {
             return (
               <ProductCard
-                name={product.name}
-                price={product.price}
-                image_link={product.image_link}
-                description={product.description}
+                product={product}
+                authenticated={authenticated}
+                cart={cart}
+                handleCartItems={handleCartItems}
+                handleItems={handleItems}
               />
             );
           })}
@@ -41,10 +48,11 @@ export default function ProductCarousel(props) {
           {productsState.slice(3, 6).map((product) => {
             return (
               <ProductCard
-                name={product.name}
-                price={product.price}
-                image_link={product.image_link}
-                description={product.description}
+                product={product}
+                authenticated={authenticated}
+                cart={cart}
+                handleCartItems={handleCartItems}
+                handleItems={handleItems}
               />
             );
           })}
@@ -55,10 +63,11 @@ export default function ProductCarousel(props) {
           {productsState.slice(6, 9).map((product) => {
             return (
               <ProductCard
-                name={product.name}
-                price={product.price}
-                image_link={product.image_link}
-                description={product.description}
+                product={product}
+                authenticated={authenticated}
+                cart={cart}
+                handleCartItems={handleCartItems}
+                handleItems={handleItems}
               />
             );
           })}

@@ -7,16 +7,23 @@ import "./product.css";
 import Hero from "../../Components/Hero/Hero";
 import AllProducts from "../../Components/AllProducts/AllProducts";
 
-export default function Product(props) {
+export default function Product({
+  authenticated,
+  cart,
+  handleCartItems,
+  handleItems,
+  title,
+  src,
+}) {
   return (
     <div>
       <Container>
         <Row>
           <Col>
             <Hero
-              title={`Browse our ${props.title}s`}
-              src={props.src}
-              alt={`${props.title}-hero-image`}
+              title={`Browse our ${title}s`}
+              src={src}
+              alt={`${title}-hero-image`}
             />
           </Col>
         </Row>
@@ -27,7 +34,13 @@ export default function Product(props) {
         </Row>
         <Row>
           <Col>
-            <ProductCarousel category={props.title} />
+            <ProductCarousel
+              category={title}
+              authenticated={authenticated}
+              cart={cart}
+              handleCartItems={handleCartItems}
+              handleItems={handleItems}
+            />
           </Col>
         </Row>
       </Container>
@@ -41,11 +54,11 @@ export default function Product(props) {
       >
         <Row>
           <Col>
-            <h4>All {props.title}s:</h4>
+            <h4>All {title}s:</h4>
           </Col>
         </Row>
         <Row>
-          <AllProducts category={props.title} />
+          <AllProducts category={title} />
         </Row>
       </Container>
     </div>
