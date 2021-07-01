@@ -9,21 +9,32 @@ export default function Payment({
   cartItems,
   items,
   order,
+  cart,
+  handleCartItems,
 }) {
-  return (
-    <div>
-      {authenticated ? (
-        <Container style={{ marginTop: "3rem", width: "50%" }}>
+  const renderPayment = () => {
+    if (authenticated) {
+      return (
+        <Container style={{ marginTop: "3rem" }}>
           <Hero
             title={`${user.name}, proceed to payment.`}
             src="https://images.unsplash.com/photo-1567401893414-76b7b1e5a7a5?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2250&q=80"
             alt="order-hero-image"
           />
-          <StripeContainer items={items} cartItems={cartItems} order={order} />
+          <StripeContainer
+            items={items}
+            cartItems={cartItems}
+            order={order}
+            user={user}
+            cart={cart}
+            handleCartItems={handleCartItems}
+          />
         </Container>
-      ) : (
-        <Redirect to="/login" />
-      )}
-    </div>
-  );
+      );
+    } else {
+      return <Redirect to="/login" />;
+    }
+  };
+
+  return <div>{order.length > 0 ? renderPayment() : <Redirect to="/" />}</div>;
 }

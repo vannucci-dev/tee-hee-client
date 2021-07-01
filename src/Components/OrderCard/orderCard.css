@@ -1,0 +1,9 @@
+.cart-DX {
+  display: flex;
+  position: absolute;
+  right: 3rem;
+}
+
+.cardDescription {
+  margin-left: 5px;
+}

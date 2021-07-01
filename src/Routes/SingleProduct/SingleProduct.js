@@ -60,7 +60,9 @@ export default function SingleProduct({
               <p>{capitalize(product.description)}</p>
               {authenticated ? (
                 <>
-                  <label for="quantity">Quantity:</label>
+                  <label style={{ marginRight: "5px" }} for="quantity">
+                    Quantity:
+                  </label>
                   <input
                     type="number"
                     min="1"
@@ -68,6 +70,7 @@ export default function SingleProduct({
                     name="quantity"
                     id="quantity"
                     onChange={(e) => setQuantity(e.target.value)}
+                    style={{ marginRight: "10px" }}
                   />
 
                   <Button
@@ -79,7 +82,7 @@ export default function SingleProduct({
                 </>
               ) : (
                 <Link to="/login">
-                  <Button>Login to continue</Button>
+                  <Button variant="outline-warning">Login to continue</Button>
                 </Link>
               )}
               {added ? <div>Added!</div> : ""}

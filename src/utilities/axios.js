@@ -105,3 +105,15 @@ export const addToOrderItems = async (
     throw err.response.data;
   }
 };
+
+export const clearCartItems = async (id) => {
+  try {
+    const response = await axios({
+      url: `/api/cart-items/${id}`,
+      method: "DELETE",
+    });
+    return response.data;
+  } catch (err) {
+    throw err.response.data;
+  }
+};

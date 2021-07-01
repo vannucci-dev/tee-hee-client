@@ -104,6 +104,7 @@ auth.post(
       userID: req.user.user_id,
       username: req.user.username,
       name: req.user.first_name,
+      last_name: req.user.last_name,
       email: req.user.email,
     };
     res.send(userInfo);

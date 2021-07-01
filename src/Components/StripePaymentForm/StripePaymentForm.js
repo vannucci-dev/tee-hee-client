@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import { Link } from "react-router-dom";
-import { addToOrderItems } from "../../utilities/axios";
+import { addToOrderItems, clearCartItems } from "../../utilities/axios";
+
+import Form from "react-bootstrap/Form";
+import "./stripePaymentForm.css";
 
 import axios from "axios";
 
@@ -13,7 +16,7 @@ const CARD_OPTIONS = {
       color: "black",
       fontWeight: 500,
       fontFamily: "Roboto, Open Sans, Segoe UI, sans-serif",
-      fontSize: "40px",
+      fontSize: "20px",
       fontSmoothing: "antialiased",
       ":-webkit-autofill": { color: "#fce883" },
       "::placeholder": { color: "#87bbfd" },
@@ -25,7 +28,14 @@ const CARD_OPTIONS = {
   },
 };
 
-export default function StripePaymentForm({ items, cartItems, order }) {
+export default function StripePaymentForm({
+  items,
+  cartItems,
+  order,
+  user,
+  cart,
+  handleCartItems,
+}) {
   const [success, setSuccess] = useState(false);
   const [failed, setFailed] = useState(false);
   const stripe = useStripe();
@@ -80,6 +90,11 @@ export default function StripePaymentForm({ items, cartItems, order }) {
     }
   };
 
+  const handleCartItemsRemoval = async () => {
+    await clearCartItems(cart.cart_id);
+    handleCartItems([]);
+  };
+
   useEffect(() => {
     if (success) {
       handleOrderItemsCreation();
@@ -90,13 +105,47 @@ export default function StripePaymentForm({ items, cartItems, order }) {
     if (!success) {
       return (
         <>
+          <Form>
+            <Form.Group className="mb-3">
+              <Form.Label>Name:</Form.Label>
+              <Form.Control
+                id="nameForm"
+                type="text"
+                name="nameForm"
+                readOnly
+                placeholder={user.name + " " + user.last_name}
+              />
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>Email:</Form.Label>
+              <Form.Control
+                id="emailForm"
+                type="text"
+                name="emailForm"
+                readOnly
+                placeholder={user.email}
+              />
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>Address:</Form.Label>
+              <Form.Control
+                id="addressForm"
+                type="text"
+                name="addressForm"
+                readOnly
+                placeholder="12 Dummy St, Manchester, M1XXX"
+              />
+            </Form.Group>
+            <p>The total is:</p>
+            <p>£{order[0].total}</p>
+          </Form>
           <form onSubmit={handleSubmit}>
             <fieldset className="FormGroup">
               <div className="FormRow">
                 <CardElement options={CARD_OPTIONS} />
               </div>
             </fieldset>
-            <button>Pay</button>
+            <button className="checkoutBtn">Checkout</button>
           </form>
           {failed ? (
             <div>
@@ -108,11 +157,21 @@ export default function StripePaymentForm({ items, cartItems, order }) {
         </>
       );
     } else {
+      const params = {
+        pathname: "/user",
+        state: {
+          order: order[0],
+        },
+      };
+      if (failed === false) {
+        handleCartItemsRemoval();
+      }
+      console.log("order in form.js", params);
       return (
         <div>
           <h2>
             Payment succesful! Review it in your account{" "}
-            <Link to="/user">here.</Link>
+            <Link to={params}>here.</Link>
           </h2>
         </div>
       );

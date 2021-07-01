@@ -3,6 +3,7 @@ import Button from "react-bootstrap/Button";
 import { useState } from "react";
 import { addToCartItems, getCartItems } from "../../utilities/axios";
 import { Link } from "react-router-dom";
+import "./card.css";
 
 export default function ProductCard({
   product,
@@ -26,15 +27,9 @@ export default function ProductCard({
   };
 
   return (
-    <Card style={{ maxWidth: "500px", overflow: "hidden" }}>
+    <Card className="bigCard">
       <Card.Img
-        style={{
-          maxHeight: "500px",
-          minHeight: "500px",
-          maxWidth: "300px",
-          minWidth: "300px",
-          objectFit: "cover",
-        }}
+        className="bigCardImage"
         variant="top"
         src={product.image_link}
         alt={product.description}
@@ -42,33 +37,40 @@ export default function ProductCard({
       <Card.Body>
         <Card.Title>{product.name}</Card.Title>
         <Card.Subtitle>£{product.price}</Card.Subtitle>
-        <Card.Text>{product.description}</Card.Text>
+        <Card.Text className="productDescr">{product.description}</Card.Text>
 
         {authenticated ? (
-          <>
+          <div className="addToCartContainer">
             <Button
+              className="addToBtn"
               variant="outline-dark"
               onClick={() => handleAdditionToCartItems(quantity)}
             >
               Add to Cart
             </Button>
 
-            <label for="quantity">Quantity:</label>
-            <input
-              type="number"
-              min="1"
-              max="10"
-              name="quantity"
-              id="quantity"
-              onChange={(e) => setQuantity(e.target.value)}
-            />
-          </>
+            <div className="quantity">
+              <label className="quantityLabel" for="quantity">
+                Quantity:
+              </label>
+              <input
+                type="number"
+                min="1"
+                max="10"
+                name="quantity"
+                id="quantity"
+                onChange={(e) => setQuantity(e.target.value)}
+              />
+            </div>
+          </div>
         ) : (
           <Link to="/login">
-            <Button>Login to continue</Button>
+            <Button className="loginButton" variant="outline-warning">
+              Login to continue
+            </Button>
           </Link>
         )}
-        {added ? <div>Added!</div> : ""}
+        {added ? <div className="added">Added!</div> : ""}
       </Card.Body>
     </Card>
   );

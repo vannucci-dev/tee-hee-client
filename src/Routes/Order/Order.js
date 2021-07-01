@@ -1,6 +1,7 @@
 import { Redirect, Link } from "react-router-dom";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
+import Button from "react-bootstrap/Button";
 import Col from "react-bootstrap/Col";
 import Hero from "../../Components/Hero/Hero";
 import OrderCard from "../../Components/OrderCard/OrderCard";
@@ -20,22 +21,20 @@ export default function Order({
     console.log(user);
     const added = await addToOrder(user.userID, total, "pending");
     const response = await getOrder(added.user_id);
-    handleOrder(response[0]);
+    handleOrder(response);
   };
 
   return (
     <div>
       {authenticated ? (
-        <Container style={{ marginTop: "3rem", width: "50%" }}>
+        <Container className="orderContainer">
           <Hero
             title={`${user.name}, you're one step away from your new style`}
             src="https://images.unsplash.com/photo-1567401893414-76b7b1e5a7a5?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2250&q=80"
             alt="order-hero-image"
           />
-          <Row>
-            <Col style={{ marginBottom: "2rem" }}>
-              <h4>Review your order:</h4>
-            </Col>
+          <h4>Review your order:</h4>
+          <Row className="orderItems">
             <Col>
               {items.map((product, index) => {
                 total += Number(
@@ -51,12 +50,17 @@ export default function Order({
               })}
             </Col>
           </Row>
-          <div>Total:</div>
-          <div>{total}</div>
+          <p className="totalLabel">Total:</p>
+          <p className="total">£{total}</p>
           <Link to="/checkout">
-            <button role="link" onMouseDown={handleOrderCreation}>
+            <Button
+              className="paymentBtn"
+              variant="outline-dark"
+              role="link"
+              onMouseDown={handleOrderCreation}
+            >
               Proceed to payment
-            </button>
+            </Button>
           </Link>
         </Container>
       ) : (

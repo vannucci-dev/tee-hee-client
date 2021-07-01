@@ -20,8 +20,17 @@ export default function AlertDismissibleExample() {
           <strong>PLEASE</strong>, do not waste your money. Thanks!
         </p>
         <hr />
+        <p>If you want to test the payment please use the testing data:</p>
+        <p>
+          <strong>Card number:</strong> 424242424242424242
+          <br />
+          <strong>MM/YY: </strong> 42/42
+          <br />
+          <strong>CVC:</strong> 42
+          <br />
+        </p>
         <p className="mb-0">
-          You can close the alert in the top right corner. Thanks for visiting!
+          You can close the alert in the top left corner. Thanks for visiting!
         </p>
       </Alert>
     );

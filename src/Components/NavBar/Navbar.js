@@ -6,13 +6,14 @@ import Form from "react-bootstrap/Form";
 import FormControl from "react-bootstrap/FormControl";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import "./navbar.css";
 
 export default function NavBar({
   isLoggedOut,
   authenticated,
   user,
-  cart,
   handleMouseDown,
+  items,
 }) {
   const logOut = (e) => {
     e.preventDefault();
@@ -34,14 +35,16 @@ export default function NavBar({
   const isAuthenticated = (auth) => {
     if (auth) {
       return (
-        <div>
-          Hello <Link to="/user">{user.name}</Link>!{" "}
-          <Link onClick={logOut}>Logout</Link>
+        <div className="userAuthenticated">
+          <Link id="userName" to="/user">
+            {user.name}
+          </Link>
+          ! <Link onClick={logOut}>Logout</Link>
         </div>
       );
     } else {
       return (
-        <div>
+        <div className="userAuthenticated">
           <Link to="/login">Login</Link>
           <Link to="/signup">Signup</Link>
         </div>
@@ -50,7 +53,11 @@ export default function NavBar({
   };
 
   return (
-    <Navbar expand="lg" style={{ backgroundColor: "#faf1e6" }}>
+    <Navbar
+      className="navbar"
+      expand="lg"
+      style={{ backgroundColor: "#faf1e6" }}
+    >
       <img
         style={{ margin: "auto 2rem" }}
         src="./default-monochrome-black.svg"
@@ -62,7 +69,9 @@ export default function NavBar({
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="mr-auto">
-          <Link to="/">Home</Link>
+          <Link to="/" className="home-button">
+            Home
+          </Link>
           <NavDropdown title="Shop" id="basic-nav-dropdown">
             <Link to="/shirts">T-shirts</Link>
             <NavDropdown.Divider />
@@ -76,9 +85,13 @@ export default function NavBar({
           <Form inline>
             <FormControl type="text" placeholder="Search" className="mr-sm-2" />
           </Form>
-          <button onMouseDown={handleMouseDown}>
-            <i class="fas fa-shopping-cart"></i>
-          </button>
+          <div className="cartIcon" onMouseDown={handleMouseDown}>
+            <i
+              style={{ margin: "5px 0 0 5px" }}
+              class="fas fa-lg fa-shopping-cart"
+            ></i>
+            <p>({items.length})</p>
+          </div>
         </Nav>
       </Navbar.Collapse>
     </Navbar>

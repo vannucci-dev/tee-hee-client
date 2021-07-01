@@ -29,7 +29,7 @@ export default function App() {
     setCartItems(newItems);
   };
   const handleOrder = (newOrder) => {
-    setOrder((order) => [...order, newOrder]);
+    setOrder(newOrder);
   };
 
   const handleItems = (newItems) => {
@@ -99,6 +99,7 @@ export default function App() {
         authenticated={authenticated}
         user={user}
         isLoggedOut={isLoggedOut}
+        items={items}
       />
       {authenticated ? (
         <Cart
@@ -169,7 +170,12 @@ export default function App() {
           }
         />
         <Route path="/user">
-          <User user={user} authenticated={authenticated} order={order} />
+          <User
+            user={user}
+            authenticated={authenticated}
+            order={order}
+            handleOrder={handleOrder}
+          />
         </Route>
         <Route path="/order">
           <Order
@@ -188,6 +194,8 @@ export default function App() {
             user={user}
             authenticated={authenticated}
             order={order}
+            cart={cart}
+            handleCartItems={handleCartItems}
           />
         </Route>
         <Route path="/">

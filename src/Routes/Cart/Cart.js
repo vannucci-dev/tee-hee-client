@@ -58,7 +58,9 @@ export default function Cart({
       ) : (
         <div>
           <h3 style={{ marginTop: "3rem" }}>Your shopping cart: </h3>
-          <button onMouseDown={handleMouseDown}>X</button>
+          <button className="cartCloseBtn" onMouseDown={handleMouseDown}>
+            X
+          </button>
           {renderItems()}
 
           <hr />

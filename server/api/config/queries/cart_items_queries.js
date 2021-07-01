@@ -33,10 +33,9 @@ const addNewItemInCartItems = (req, res) => {
 //DELETE api/cart-items/:id
 const deleteItemFromCartItems = (req, res) => {
   const id = parseInt(req.params.id);
-  const { product_id } = req.body;
   pool.query(
-    "DELETE FROM cart_items WHERE product_id = $1 AND cart_id = $2",
-    [product_id, id],
+    "DELETE FROM cart_items WHERE cart_id = $1",
+    [id],
     (err, results) => {
       if (err) {
         throw err;

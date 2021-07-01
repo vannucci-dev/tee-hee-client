@@ -1,0 +1,41 @@
+.home-button {
+  margin-top: 10px;
+}
+
+.userAuthenticated {
+  margin-top: 10px;
+  margin-right: 1rem;
+}
+
+.navbar a {
+  color: black;
+  text-decoration: none;
+  margin-left: 1.5rem;
+}
+#userName {
+  margin-left: 0;
+  text-decoration: underline;
+}
+
+.cartIcon {
+  width: 5rem;
+  display: flex;
+  height: 2rem;
+  cursor: pointer;
+  margin-top: 5px;
+}
+
+.cartIcon p {
+  margin-left: 1rem;
+  font-size: 1.1rem;
+}
+
+@media only screen and (max-width: 800px) {
+  .cartIcon {
+    margin-top: 10px;
+  }
+
+  .mr-sm-2 {
+    margin-top: 10px;
+  }
+}

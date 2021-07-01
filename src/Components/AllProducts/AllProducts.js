@@ -20,7 +20,7 @@ export default function AllProducts(props) {
   }, [props.category]);
 
   let width = window.innerWidth;
-  let groupSize = width > 900 ? 5 : 3;
+  let groupSize = width > 800 ? 5 : 3;
   let rows = productsState
     .map(function (product) {
       // map content to JSX elements

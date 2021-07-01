@@ -1,0 +1,65 @@
+.bigCardImage {
+  max-height: 500px;
+  min-height: 500px;
+  max-width: 100%;
+  min-width: 300px;
+  object-fit: cover;
+}
+
+.loginButton {
+  position: absolute;
+  bottom: 20px;
+}
+
+.bigCard {
+  max-width: 33% !important;
+  overflow: hidden;
+}
+
+.bigCard p {
+  margin-top: 20px;
+  margin-bottom: 6rem;
+}
+
+.addToBtn {
+  margin-right: 10px;
+}
+
+.quantityLabel {
+  margin-right: 5px;
+}
+
+.addToCartContainer {
+  position: absolute;
+  bottom: 20px;
+  display: flex;
+  align-items: center;
+}
+
+.added {
+  position: absolute;
+  bottom: 10%;
+}
+
+@media only screen and (max-width: 800px) {
+  .addToBtn {
+    margin-left: 50%;
+    transform: translateX(-50%);
+    width: 10rem;
+  }
+
+  .quantity {
+    margin-left: 15%;
+    margin-top: 10px;
+  }
+
+  .addToCartContainer {
+    display: block;
+  }
+
+  .added {
+    bottom: 0.5%;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+}

@@ -10,6 +10,11 @@
   z-index: 1000;
 }
 
+@media only screen and (max-width: 800px) {
+  #flyoutMenu {
+    width: 100vw;
+  }
+}
 #flyoutMenu.hide {
   transform: translateX(300vh);
   opacity: 0;
@@ -51,4 +56,12 @@
 .total {
   color: #064420;
   margin-left: 2rem;
+}
+
+.cartCloseBtn {
+  position: absolute;
+  right: 3rem;
+  top: 2rem;
+  background-color: transparent;
+  border: transparent;
 }

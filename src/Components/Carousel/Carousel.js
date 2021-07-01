@@ -27,7 +27,7 @@ export default function ProductCarousel({
   }, [category]);
 
   return (
-    <Carousel controls={false} interval={4000}>
+    <Carousel controls={false} indicators={false} interval={4000}>
       <Carousel.Item>
         <Container style={{ display: "flex", justifyContent: "center" }}>
           {productsState.slice(0, 3).map((product) => {

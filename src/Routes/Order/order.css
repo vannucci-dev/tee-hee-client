@@ -1,0 +1,21 @@
+.orderContainer {
+  margin-top: 3rem;
+}
+
+.orderItems {
+  margin-bottom: 2rem;
+}
+
+.totalLabel {
+  font-size: 0.9rem;
+  font-weight: 400;
+}
+
+.label {
+  font-size: 1.4rem;
+  font-weight: 800;
+}
+
+.paymentBtn {
+  margin-top: 1rem;
+}

@@ -1,0 +1,28 @@
+.card {
+  max-width: 20%;
+  overflow: hidden;
+}
+
+.cardImg {
+  max-height: 200px;
+  min-height: 200px;
+  max-width: 100%;
+  min-width: 200px;
+  object-fit: cover;
+}
+
+#moreButton {
+  position: absolute;
+  bottom: 10px;
+}
+
+.cardText {
+  margin-bottom: 3.5rem;
+  margin-top: 10px;
+}
+
+@media only screen and (max-width: 800px) {
+  .card {
+    max-width: 33%;
+  }
+}
